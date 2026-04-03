@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+using ll = long long;
+const ll MOD = 1e9 + 7;
+
+int main() {
+	int n = 0;
+	cin >> n;
+	vector <ll> numbers(n);
+	for (int i = 0; i < n; i++)
+		cin >> numbers[i];
+	ll total = 0;
+	for (int i = 0; i < n; i++)
+		total = (total + numbers[i]) % MOD;
+	ll pref = 0;
+	ll ans = 0;
+	for (int i = 0; i < n; i++) {
+		ll right = (total - pref - numbers[i]);
+		if (right < 0)
+			right += MOD;
+		ll constribution = numbers[i] * pref % MOD * right % MOD;
+		ans = (ans + constribution) % MOD;
+		pref = (pref + numbers[i]) % MOD;
+	}
+	cout << ans;
+}
