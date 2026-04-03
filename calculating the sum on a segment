@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+int main() {
+	int k = 0;
+	long long number = 0;
+	cin >> k >> number;
+	vector <long long> numbers(k);
+	for (int i = 0; i < k; i++)
+		cin >> numbers[i];
+	map <long long, int> numbers2;
+	numbers2[0] = 1;
+	long long ans = 0;
+	long long sum = 0;
+	for (int i = 0; i < k; i++) {
+		sum += numbers[i];
+		ans += numbers2[sum - number];
+		numbers2[sum]++;
+	}
+	cout << ans;
+}
