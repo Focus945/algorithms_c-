@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    
+    string s;
+    cin >> s;
+
+    vector<int> a;
+
+    for (char c : s) {
+        a.push_back(c - '0');
+    }
+
+    sort(a.begin(), a.end()); 
+
+    int sum = 0;
+    for (int x : a) sum += x;
+
+    int mod = sum % 3;
+
+    auto remove_one = [&](int r) {
+        for (int i = 0; i < (int)a.size(); i++) {
+            if (a[i] % 3 == r) {
+                a.erase(a.begin() + i);
+                return true;
+            }
+        }
+        return false;
+        };
+
+    auto remove_two = [&](int r) {
+        int cnt = 0;
+        for (int i = 0; i < (int)a.size(); i++) {
+            if (a[i] % 3 == r) {
+                a.erase(a.begin() + i);
+                i--;
+                cnt++;
+                if (cnt == 2) return true;
+            }
+        }
+        return false;
+        };
+
+    if (mod == 1) {
+        if (!remove_one(1)) {
+            remove_two(2);
+        }
+    }
+    else if (mod == 2) {
+        if (!remove_one(2)) {
+            remove_two(1);
+        }
+    }
+
+    sort(a.rbegin(), a.rend());
+
+    for (int x : a) {
+        cout << x;
+    }
+
+    cout << "\n";
+}
