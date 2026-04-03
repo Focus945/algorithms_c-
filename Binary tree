@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Node {
+	int val;
+	Node* left;
+	Node* right;
+
+	Node(int x) {
+		val = x;
+		left = nullptr;
+		right = nullptr;
+	}
+};
+
+
+int main() {
+	Node* root = nullptr;
+	int number = 0;
+	int max_height = 0;
+	while (cin >> number && number != 0) {
+		if (root == nullptr) {
+			root = new Node(number);
+			max_height = 1;
+			continue;
+		}
+		Node* current = root;
+		int depth = 1;
+
+		while (true) {
+			depth++;
+			if (number == current->val)
+				break;
+			if (number < current->val) {
+				if (current->left == nullptr) {
+					current->left = new Node(number);
+					max_height = max(max_height, depth);
+					break;
+				}
+				current = current->left;
+			}
+			else {
+				if (current->right == nullptr) {
+					current->right = new Node(number);
+					max_height = max(max_height, depth);
+					break;
+				}
+				current = current->right;
+			}
+		}
+
+	}
+	cout << max_height << endl;
+	
+
+
+}
